@@ -13,8 +13,14 @@ def futureSeriesLeading
     (1 + r / n)
 
 -- PMT = 0
-theorem futureSeriesLeading_zero_pmt (r : Rat) (n : Nat) :
-  futureSeriesLeading 0 r n = 0 := by
+theorem futureSeriesLeading_pmt_zero (r : Rat) (n : Nat) :
+    futureSeriesLeading 0 r n = 0 := by
+  unfold futureSeriesLeading
+  norm_num
+
+-- r = 0
+theorem futureSeriesLeading_r_zero (PMT : Int) (n : Nat) :
+    futureSeriesLeading PMT 0 n = 0 := by
   unfold futureSeriesLeading
   norm_num
 
@@ -33,16 +39,14 @@ def futureSeriesTrailing
       (r / n))
 
 -- PMT = 0
-theorem futureSeriesTrailing_zero_pmt (r : Rat) (n : Nat) :
-  futureSeriesTrailing 0 r n = 0 := by
-  unfold futureSeriesTrailing
-  norm_num
+theorem futureSeriesTrailing_pmt_zero (r : Rat) (n : Nat) :
+    futureSeriesTrailing 0 r n = 0 := by
+  simp [futureSeriesTrailing]
 
 -- r = 0
-theorem futureSeriesTrailing_zero_rate (PMT : Int) (n : Nat) :
-  futureSeriesTrailing PMT 0 n = PMT * n := by
-  unfold futureSeriesTrailing
-  norm_num
+theorem futureSeriesTrailing_r_zero (PMT : Int) (n : Nat) :
+    futureSeriesTrailing PMT 0 n = PMT * n := by
+  simp [futureSeriesTrailing]
 
 
 -- A=P×(1+r/n)n×t
@@ -53,13 +57,14 @@ def compound
   (r : Rat)   -- annual rate
   (n : Nat)   -- periods per year
   (t : Nat)   -- time in years
+  (fseries := futureSeriesTrailing)
     : Rat :=
   match t with
   | Nat.zero => P
   | Nat.succ t' =>
       (compound P PMT r n t') *
       ((1 + r / n)^n) +
-      (futureSeriesTrailing PMT r n)
+      (fseries PMT r n)
 
 -- t = 0
 theorem compound_t_zero (P : Rat) (PMT : Int) (r : Rat) (n : Nat) :
@@ -71,4 +76,4 @@ theorem compound_t_zero (P : Rat) (PMT : Int) (r : Rat) (n : Nat) :
 theorem compound_t_one (P : Rat) (r : Rat) (n : Nat) :
     compound P 0 r n 1 = P * ((1 + r / n)^n) := by
   simp [compound]
-  apply futureSeriesTrailing_zero_pmt
+  apply futureSeriesTrailing_pmt_zero

@@ -2,8 +2,6 @@
 
 Tools for performing personal finance calculations in Lean. It's like [Soulver](https://soulver.app), but limited to retirement planning and with a complicated type system.
 
-Compounding is performed under the assumption that contributions are made at the _end_ of the period. In the future, both leading and trailing contributions should be supported.
-
 ## Future
 
 Support for inflation is coming soon, and may require handling expenses separately from contributions.
@@ -24,7 +22,7 @@ First install Lean 4: https://leanprover-community.github.io/get_started.html
 
 I recommend you clone the repo, create a Scratchpad.lean file, and start defining some Scenarios.
 
-Lean provides the ability to evaluate functions directly in your code editor via #eval - this is the entire motiviation of this project:
+Lean provides the ability to evaluate functions directly in your code editor via `#eval` - this is the entire motivation of this project:
 
 ```
 def plan : Scenario := {
@@ -50,6 +48,4 @@ def plan : Scenario := {
 
 -- end of plan balance will be $1,124,477:
 #eval plan.endingBalance.floor
-
-
 ```

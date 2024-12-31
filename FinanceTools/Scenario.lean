@@ -25,9 +25,12 @@ structure Scenario where
   -- saving or spending periods:
   periods : Array Period
 
+  -- strategy for compounding payment
+  (fseries := futureSeriesTrailing)
+
   def Scenario.endingBalance (self : Scenario) : Rat :=
     self.periods.foldl
-      (fun acc p => compound acc p.PMT p.r self.n p.t)
+      (fun acc p => compound acc p.PMT p.r self.n p.t self.fseries)
       self.P
 
 -- t=0
