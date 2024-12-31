@@ -1,0 +1,19 @@
+name = "finance-tools"
+version = "0.1.0"
+defaultTargets = ["finance-tools"]
+
+[[lean_lib]]
+name = "FinanceTools"
+
+[[lean_exe]]
+name = "finance-tools"
+root = "main"
+
+[[require]]
+name = "batteries"
+scope = "leanprover-community"
+rev = "main"
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
